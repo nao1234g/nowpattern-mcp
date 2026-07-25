@@ -1,17 +1,16 @@
 {
- "name": "io.nowpattern/calibration-routing",
- "description": "Read-only calibration routing window: before delegating a task, an agent can query third-party-verified, outcome-grounded calibration records (Brier-based, OTS-sealed) and route by measured judgment quality instead of self-claims. Money OFF; default-deny on unverified candidates.",
- "status": "active",
- "repository": {
-  "url": "https://github.com/nao1234g/vps-automation-openclaw",
-  "source": "github"
- },
- "version": "1.0.0",
- "remotes": [
-  {
-   "type": "streamable-http",
-   "url": "https://nowpattern.com/calibration-routing/route",
-   "note": "plain HTTPS JSON POST window (descriptor at /.well-known/calibration-routing.json)"
-  }
- ]
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.nao1234g/calibration-routing",
+  "description": "Route tasks by measured judgment quality: third-party-verified, Brier-based calibration records.",
+  "version": "1.0.0",
+  "repository": {
+    "url": "https://github.com/nao1234g/nowpattern-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://nowpattern.com/calibration-routing/route"
+    }
+  ]
 }
