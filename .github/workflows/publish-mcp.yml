@@ -1,0 +1,26 @@
+name: Publish to MCP Registry
+on:
+  workflow_dispatch: {}
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download mcp-publisher v1.8.0
+        run: |
+          curl -sSL -o mp.tar.gz https://github.com/modelcontextprotocol/registry/releases/download/v1.8.0/mcp-publisher_linux_amd64.tar.gz
+          tar -xzf mp.tar.gz mcp-publisher
+      - name: Login via GitHub OIDC
+        run: ./mcp-publisher login github-oidc
+      - name: Validate server.json
+        run: ./mcp-publisher validate
+      - name: Publish
+        run: ./mcp-publisher publish
+      - name: Verify listing
+        run: |
+          sleep 5
+          curl -s "https://registry.modelcontextprotocol.io/v0/servers?search=nao1234g" | tee listing.json
+          python3 -c "import json;d=json.load(open('listing.json'));assert d['metadata']['count']>=1, 'not listed';print('LISTED:',[s['server']['name'] for s in d['servers']])"
